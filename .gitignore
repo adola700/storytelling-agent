@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+
+# OpenClaw runtime
+workspace/memory/*.md
+!workspace/memory/.gitkeep
+
+# Environment secrets (if extracted from openclaw.json)
+.env
+.env.local
+
+# Logs
+*.log

@@ -1,0 +1,39 @@
+{
+  "agent": {
+    "model": "openai/gpt-5.1",
+    "thinking": null
+  },
+  "agents": {
+    "defaults": {
+      "workspace": "./workspace",
+      "subagents": {
+        "allowAgents": ["*"],
+        "archiveAfterMinutes": 120
+      }
+    }
+  },
+  "tools": {
+    "sessions": {
+      "visibility": "tree"
+    },
+    "subagents": {
+      "tools": ["read", "write", "edit"]
+    }
+  },
+  "session": {
+    "agentToAgent": {
+      "maxPingPongTurns": 3
+    }
+  },
+  "cron": [
+    {
+      "id": "story-heartbeat",
+      "schedule": "*/3 * * * *",
+      "task": "Run the heartbeat check as described in HEARTBEAT.md. Read MEMORY.md to check story state. If there is an active story and the user appears idle, send a gentle nudge. Otherwise reply HEARTBEAT_OK.",
+      "label": "Story idle check (every 3 minutes)"
+    }
+  ],
+  "env": {
+    "OPENAI_API_KEY": "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"
+  }
+}
