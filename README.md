@@ -34,7 +34,7 @@ User (Telegram)
 
 ## Prerequisites
 
-- **Node.js** v22+
+- **Node.js** v22+ (required for OpenClaw 2026)
 - **OpenClaw** installed globally: `npm install -g openclaw`
 - **Telegram Bot** created via [@BotFather](https://t.me/BotFather) — save the bot token
 - **Telegram User ID** — get it from [@userinfobot](https://t.me/userinfobot)
