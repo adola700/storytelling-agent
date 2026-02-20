@@ -1,0 +1,20 @@
+# Storytelling Agent — Requirements
+#
+# System Requirements:
+#   - Node.js v22+ (https://nodejs.org)
+#   - npm v10+
+#
+# Install Node.js 22 (Ubuntu/Debian):
+#   curl -fsSL https://deb.nodesource.com/setup_22.x | sudo bash -
+#   sudo apt install nodejs -y
+#
+# Install OpenClaw:
+#   npm install -g openclaw
+#
+# Telegram Bot:
+#   - Create via @BotFather on Telegram
+#   - Save the bot token
+#   - Get your user ID from @userinfobot
+#
+# OpenAI API Key:
+#   - Configured in openclaw.json env section

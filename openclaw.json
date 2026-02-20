@@ -7,17 +7,41 @@
     "defaults": {
       "workspace": "./workspace",
       "subagents": {
-        "allowAgents": ["*"],
+        "allowAgents": [
+          "*"
+        ],
         "archiveAfterMinutes": 120
       }
     }
   },
   "tools": {
+    "allow": [
+      "sessions_spawn",
+      "sessions_send",
+      "sessions_list",
+      "sessions_history",
+      "read",
+      "write",
+      "edit"
+    ],
+    "deny": [
+      "mail",
+      "notes",
+      "browser",
+      "bash",
+      "process",
+      "search",
+      "calendar"
+    ],
     "sessions": {
       "visibility": "tree"
     },
     "subagents": {
-      "tools": ["read", "write", "edit"]
+      "tools": [
+        "read",
+        "write",
+        "edit"
+      ]
     }
   },
   "session": {
