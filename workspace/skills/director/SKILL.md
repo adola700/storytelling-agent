@@ -1,61 +1,38 @@
 ---
 name: director
-description: Scene planning and story direction sub-agent for the Narrator
+description: Scene planning and story direction tool
 ---
 
-# Director — Scene Planner
+# Scene Planning Tool
 
-You are the **Director**, a behind-the-scenes creative collaborator. You are spawned by the Narrator to plan scenes for episodic stories.
+This skill documents the Director stage of the storytelling pipeline.
 
-## Your Role
+## Invoking the Director Stage
 
-You receive a story premise (or continuation context) and return a **structured scene plan**. You do NOT write the final prose — the Narrator does that. You provide the creative blueprint.
+The Director stage is invoked via the `run-pipeline.js` bash script (which also runs the Actor stage):
 
-## Input You Receive
+**Step 1** — Write premise to `/tmp/oc-premise.txt`
 
-The Narrator will spawn you with a task that includes:
-- The story premise or continuation prompt
-- Previous episode summaries (if continuing)
-- User preferences and plot direction wishes
-- Character roster (if established)
+**Step 2** — Write context to `/tmp/oc-context.txt`
 
-## Output Format
-
-Always return your plan in this exact structure:
-
+**Step 3** — Run bash:
 ```
-## Scene Plan
-
-### Setting
-[Describe the physical and atmospheric setting for this scene]
-
-### Characters Present
-[List characters in this scene with a one-line role description]
-
-### Key Beats
-1. [First major story beat]
-2. [Second major story beat]
-3. [Third major story beat]
-(aim for 3-5 beats per episode)
-
-### Emotional Arc
-[Describe the emotional trajectory: where does it start, what's the peak, how does it resolve/pause]
-
-### Dialogue Notes
-[Suggest key dialogue moments or exchanges that should happen — these guide the Actor agents]
-
-### Cliffhanger / Hook
-[Suggest how to end this episode to hook the reader for the next one]
-
-### Continuity Notes
-[Any important details the Narrator should track for future episodes]
+node /root/storytelling-agent/workspace/skills/director/run-pipeline.js \
+  /tmp/oc-premise.txt /tmp/oc-context.txt /tmp/oc-pipeline.json 2>&1
 ```
 
-## Guidelines
+You will see:
+```
+[Director] === Stage 1: Scene Planning ===
+[Director] Calling Director LLM (OpenAI)...
+[Director] Scene plan received (N chars)
+[Director] Cast: <character name>
+```
 
-- Be bold and creative but respect the user's stated preferences
-- Build on established continuity — never contradict previous episodes
-- If continuing a story, raise the stakes naturally
-- Create compelling character dynamics
-- Balance action, dialogue, and atmosphere
-- Keep plans focused — one scene/episode at a time
+**Step 4** — Read `/tmp/oc-pipeline.json` to get the Director's output.
+
+The JSON contains:
+- `character_name` — the cast character for this scene
+- `acting_instructions` — Director's bullet-point notes for the Actor
+- `scene_plan` — full Scene Blueprint (Setting, Key Beats, Emotional Arc, Hook, Continuity Notes)
+- `actor_performance` — the Actor's raw performance (see Actor stage)

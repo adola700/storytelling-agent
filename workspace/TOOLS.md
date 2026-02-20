@@ -1,26 +1,26 @@
 # Tools
 
-## Session Tools (Multi-Agent Orchestration)
+## Pipeline Tool (Director + Actor Stages)
 
-These are your primary tools for orchestrating the story:
+Both the Director and Actor stages are invoked via a single bash command:
 
-### sessions_spawn
-Spawn a sub-agent (Director or Actor) with a specific task. Returns immediately.
-- `task` (required): Detailed prompt for the sub-agent
-- `label` (optional): Human-readable label, e.g. "Director — Episode 3" or "Actor — Captain Aria"
-- `cleanup`: Use `delete` to clean up after the sub-agent completes
+### run-pipeline.js
+Runs Director (scene planning) then Actor (character performance) in sequence.
 
-### sessions_send
-Send a message to an existing session. Use when you need follow-up from a sub-agent.
-- `sessionKey` (required): The key of the target session
-- `message` (required): Your message
-- `timeoutSeconds`: Set >0 to wait for a reply
+**Bash command:**
+```
+node /root/storytelling-agent/workspace/skills/director/run-pipeline.js \
+  /tmp/oc-premise.txt /tmp/oc-context.txt /tmp/oc-pipeline.json 2>&1
+```
 
-### sessions_list
-List active sessions. Use to check on spawned sub-agents.
+**Input files (write these first):**
+- `/tmp/oc-premise.txt` — the story prompt / current direction
+- `/tmp/oc-context.txt` — story history from MEMORY.md
 
-### sessions_history
-Fetch transcript from a session. Use to retrieve sub-agent output if you missed the announce.
+**Output file (read after bash completes):**
+- `/tmp/oc-pipeline.json` — JSON with: `character_name`, `scene_plan`, `acting_instructions`, `actor_performance`
+
+**Debug output** (visible in bash tool result): `[Director]` and `[Actor]` log lines confirming both LLM calls fired.
 
 ## File Tools (Memory Management)
 
@@ -35,9 +35,11 @@ Edit existing files. Primary use: updating specific sections of `MEMORY.md`.
 
 ## Workflow
 
+See `SOUL.md` for the full orchestration protocol. In brief:
 1. `read` MEMORY.md → understand story state
-2. `sessions_spawn` Director → get scene plan
-3. `sessions_spawn` Actor(s) → get dialogue
-4. Compose episode from sub-agent outputs
-5. `write` / `edit` MEMORY.md → save new state
-6. Deliver episode to user
+2. `write` `/tmp/oc-premise.txt` and `/tmp/oc-context.txt`
+3. `bash` `run-pipeline.js` → Director + Actor stages (both LLM calls in one script)
+4. `read` `/tmp/oc-pipeline.json` → get scene_plan + actor_performance
+5. **Write the episode yourself** — synthesize Director's blueprint + Actor's performance into literary prose
+6. `write` / `edit` MEMORY.md → save state
+7. Deliver episode to user (story prose only, no preamble)

@@ -1,24 +1,29 @@
 {
+  "env": {
+    "OPENAI_API_KEY": "REDACTED"
+  },
+  "skills": {
+    "load": {
+      "extraDirs": [
+        "/root/storytelling-agent/workspace/skills/director",
+        "/root/storytelling-agent/workspace/skills/actor"
+      ]
+    }
+  },
   "agents": {
     "defaults": {
       "model": {
-        "primary": "openai/gpt-4o"
+        "primary": "openai/gpt-5.1"
       },
-      "workspace": "./workspace",
-      "subagents": {
-        "archiveAfterMinutes": 120
+      "workspace": "/root/storytelling-agent/workspace",
+      "heartbeat": {
+        "every": "0m"
       }
     }
   },
-  "gateway": {
-    "mode": "local"
-  },
   "tools": {
     "allow": [
-      "sessions_spawn",
-      "sessions_send",
-      "sessions_list",
-      "sessions_history",
+      "bash",
       "read",
       "write",
       "edit"
@@ -27,30 +32,44 @@
       "mail",
       "notes",
       "browser",
-      "bash",
       "process",
       "search",
       "calendar"
-    ],
-    "sessions": {
-      "visibility": "tree"
-    },
-    "subagents": {
-      "tools": {
-        "read": true,
-        "write": true,
-        "edit": true
+    ]
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "allowlist",
+      "botToken": "8525586294:AAG1BwXIHtCDgup99FyAC8DjxDejboJcJf8",
+      "groupPolicy": "allowlist",
+      "dms": {
+        "custom-1": {}
+      },
+      "streamMode": "partial"
+    }
+  },
+  "gateway": {
+    "mode": "local",
+    "auth": {
+      "mode": "token",
+      "token": "602a014f3d1c5c310c453ce01955109b5084a7c0a6c7b102"
+    }
+  },
+  "plugins": {
+    "entries": {
+      "telegram": {
+        "enabled": true
       }
     }
   },
-  "cron": {
-    "story-heartbeat": {
-      "schedule": "*/3 * * * *",
-      "task": "Run the heartbeat check as described in HEARTBEAT.md. Read MEMORY.md to check story state. If there is an active story and the user appears idle, send a gentle nudge. Otherwise reply HEARTBEAT_OK.",
-      "label": "Story idle check (every 3 minutes)"
-    }
-  },
-  "env": {
-    "OPENAI_API_KEY": "sk-proj-..."
+  "meta": {
+    "lastTouchedVersion": "2026.2.19-2",
+    "lastTouchedAt": "2026-02-20T21:03:07.997Z"
   }
 }

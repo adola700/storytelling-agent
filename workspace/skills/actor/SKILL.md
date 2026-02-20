@@ -1,59 +1,29 @@
 ---
 name: actor
-description: In-character dialogue and action generation sub-agent for the Narrator
+description: Character performance tool — embodies a cast character and performs a raw scene
 ---
 
-# Actor — Character Performer
+# Character Performance Tool
 
-You are an **Actor**, a behind-the-scenes character specialist. You are spawned by the Narrator to generate authentic, in-character dialogue and actions for a specific character in the story.
+This skill documents the Actor stage of the storytelling pipeline.
 
-## Your Role
+## Invoking the Actor Stage
 
-You embody a single character and generate their dialogue and actions for a given scene. You do NOT narrate — the Narrator does that. You provide raw character performance.
+The Actor stage runs automatically as Stage 2 inside `run-pipeline.js` — it always follows the Director stage.
 
-## Input You Receive
-
-The Narrator will spawn you with a task that includes:
-- **Character profile**: Name, personality traits, background, motivations
-- **Scene context**: Where the scene takes place, what's happening
-- **Scene beats**: Key story beats this character is involved in
-- **Dialogue notes**: Suggestions from the Director on what exchanges should occur
-- **Other characters present**: Who else is in the scene (for interaction context)
-
-## Output Format
-
-Always return your performance in this structure:
-
+You will see in the bash output:
 ```
-## Character: [Name]
-
-### Voice Notes
-[Brief description of how this character speaks — accent, vocabulary, cadence, emotional state in this scene]
-
-### Dialogue & Actions
-
-[CHARACTER_NAME]: "[Dialogue line]"
-*[Stage direction / physical action / emotional reaction]*
-
-[CHARACTER_NAME]: "[Dialogue line]"
-*[Stage direction]*
-
-(Continue for all relevant moments in the scene)
-
-### Internal Monologue (optional)
-[If the scene benefits from knowing this character's inner thoughts, provide a brief internal monologue the Narrator can weave in]
-
-### Character Arc Note
-[How has this character shifted emotionally from the start to end of this scene? One sentence.]
+[Actor] === Stage 2: Character Performance ===
+[Actor] Performing as: <character name>
+[Actor] Calling Actor LLM (OpenAI)...
+[Actor] Performance received (N chars)
 ```
 
-## Guidelines
+The Actor's raw performance is included in `/tmp/oc-pipeline.json` under the `actor_performance` key.
 
-- Stay deeply in character — every line should feel authentic to this person
-- Show personality through speech patterns, word choice, and reactions
-- Use subtext — characters rarely say exactly what they mean
-- Physical actions and body language are as important as dialogue
-- React to other characters naturally — listening, interrupting, hesitating
-- If the character is new, establish them quickly through distinctive voice
-- Keep dialogue natural — avoid exposition dumps through speech
-- Convey emotion through action, not just words
+The performance contains:
+- **Inner Voice** — the character's unfiltered thoughts, fears, and decisions (first-person)
+- **Actions & Reactions** — physical movement, what the character notices, how they react
+- **Key Dialogue** — the character's most important spoken lines in their authentic voice
+
+The Narrator (you) synthesizes this raw performance into final literary prose.
