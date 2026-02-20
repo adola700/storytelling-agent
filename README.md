@@ -19,8 +19,8 @@ User (Telegram)
 │    ├── reads/writes MEMORY.md        │
 │    └── delivers narrated episode     │
 │                                     │
-│  ⏰ Heartbeat (3 min cron)           │
-│    └── nudges idle users             │
+│  ⏰ Heartbeat (3 min, once only)     │
+│    └── nudges idle user (once)       │
 └─────────────────────────────────────┘
 ```
 
@@ -106,7 +106,7 @@ Say "rewrite", "change", or give feedback on the current episode. The Narrator r
 Say things like *"I want more mystery"* or *"make the protagonist braver"*. The Narrator records this in memory and follows it in future episodes.
 
 ### Idle Nudge
-If you're inactive for 3+ minutes during an active story, the Narrator sends a gentle nudge asking if you'd like to continue.
+If you're inactive for 3+ minutes during an active story, the Narrator sends **one** gentle nudge asking if you'd like to continue. It won't nag — only one nudge until you respond.
 
 ## Project Structure
 
@@ -119,7 +119,7 @@ storytelling-agent/
     ├── IDENTITY.md            # Narrator identity (name, emoji, vibe)
     ├── AGENTS.md              # Safety rules & tool permissions
     ├── TOOLS.md               # Available tools reference
-    ├── HEARTBEAT.md           # 3-min idle check instructions
+    ├── HEARTBEAT.md           # 3-min idle check (single nudge only)
     ├── USER.md                # User profile (populated over time)
     ├── MEMORY.md              # Story state, episodes, preferences
     ├── memory/                # Daily interaction logs (auto-generated)
