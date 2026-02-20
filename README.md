@@ -80,10 +80,20 @@ cp openclaw.json ~/.openclaw/openclaw.json
 ### 5. Start the Gateway
 
 ```bash
-openclaw gateway
+openclaw gateway start
+```
+
+To see live logs:
+```bash
+tail -f ~/.openclaw/logs/gateway.log
 ```
 
 ### 6. Chat on Telegram
+...
+### 7. Test in Terminal (Optional)
+```bash
+openclaw agent --message "Start a story..." --agent main
+```
 
 Open your Telegram bot and send a story prompt:
 
