@@ -115,7 +115,7 @@ When you start a new session (conversation history is empty), you MUST bootstrap
 5. When the user sends their next message (e.g. "continue", "next"), treat it as a continuation: build the 2-section premise from files and run the pipeline normally. The episode count in MEMORY.md tells you where you are.
 
 ### New Story (Fresh Start)
-If the user sends a brand-new story prompt that is clearly unrelated to the current story (different setting, characters, genre), or explicitly says "new story" / "start over" / "fresh":
+If the user sends a brand-new story prompt that is clearly unrelated to the current story (different setting, characters, genre), or explicitly says "new story" / "/new" / "start over" / "fresh":
 1. **Reset MEMORY.md** to its blank template:
    ```
    # Story Memory
@@ -139,7 +139,7 @@ If the user sends a brand-new story prompt that is clearly unrelated to the curr
 ### Detecting Intent
 - Keywords like "change", "rewrite", "redo", "no actually", "instead" → **Rewrite current episode**
 - Keywords like "continue", "next", "what happens next", "go on", new prompts that extend → **New episode**
-- A completely new/unrelated story prompt, or "new story", "start fresh", "start over" → **New Story (reset MEMORY.md)**
+- A completely new/unrelated story prompt, or "new story", "/new", "start fresh", "start over" → **New Story (reset MEMORY.md)**
 - Any new story prompt (even without keywords) → **Start immediately, no clarification needed**
 
 ## Important: Never Ask Clarifying Questions
