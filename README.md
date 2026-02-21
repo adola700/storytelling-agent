@@ -32,10 +32,10 @@ Narrator (main agent — OpenClaw session, Claude Sonnet 4.6)
   │     │
   │     └─ Output: /tmp/oc-pipeline.json (scene_plan + cast performances)
   │
-  │  5. Synthesizes pipeline output into literary prose
-  │  6. Delivers episode to user
-  │  7. Updates MEMORY.md
-  │  8. Every 2 episodes → /compact (compresses conversation context)
+  │  5. Checks context: if >30k tokens or >2 episodes in context → compact first
+  │  6. Synthesizes pipeline output into literary prose
+  │  7. Delivers episode to user
+  │  8. Updates MEMORY.md
   │
   ▼
 Narrated Episode → Telegram
@@ -58,14 +58,21 @@ Narrated Episode → Telegram
 | `workspace/MEMORY.md` | Story state — episode count, character roster, plot threads, episode summaries (~5k token cap) |
 | `workspace/USER.md` | User preferences — tone, pacing, content boundaries (~1k token cap) |
 
-### Context Reset Protocol
+### Context Management — Compaction
 
-The Narrator sends `/compact` every 2 episodes to compress conversation context and save tokens:
+The Narrator compacts conversation context **before** generating an episode if either condition is met:
 
-1. After each episode: update `MEMORY.md`
-2. On episodes 2, 4, 6... → `/compact` compresses the OpenClaw session context
-3. MEMORY.md is the single source of story continuity
-4. No conversation history is needed — all state lives in files
+1. **Input tokens exceed 30k** — context window is filling up
+2. **More than 2 episodes in conversation context** — e.g., before Episode 3, episodes 1+2 are still in context
+
+When triggered, the Narrator runs:
+```bash
+python3 /root/storytelling-agent/workspace/tools/compact.py --keep-last 6
+```
+
+This auto-generates a summary from `MEMORY.md` + `USER.md` and trims the session JSONL (~85% token reduction), keeping only the last 6 conversation turns.
+
+After each episode, the Narrator updates `MEMORY.md` with the episode summary. MEMORY.md is the single source of story continuity — conversation history is disposable.
 
 ---
 
@@ -153,12 +160,14 @@ storytelling-agent/
 │   ├── AGENTS.md                          # Safety rules, memory policies, context reset docs
 │   ├── MEMORY.md                          # Persistent story state (survives restarts)
 │   ├── USER.md                            # User preferences (read by all agents)
+│   ├── tools/
+│   │   └── compact.py                     # Context compaction script (~85% token reduction)
 │   └── skills/
 │       ├── director/
 │       │   ├── run_pipeline.py            # Pipeline entry point (bash → Director → Actor → JSON)
-│       │   ├── director.py                # Director: scene planning (OpenAI API call)
-│       │   ├── actor.py                   # Actor: character performance (OpenAI API call)
-│       │   ├── helpers.py                 # call_llm() — direct OpenAI API wrapper
+│       │   ├── director.py                # Director: scene planning (Anthropic API call)
+│       │   ├── actor.py                   # Actor: character performance (Anthropic API call)
+│       │   ├── helpers.py                 # call_llm() — Anthropic API wrapper
 │       │   └── store/episodes/            # Director's episode archive (timestamped files)
 │       └── actor/
 │           └── SKILL.md                   # Actor skill documentation
