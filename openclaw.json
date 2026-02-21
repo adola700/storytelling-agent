@@ -14,12 +14,13 @@
   "agents": {
     "defaults": {
       "model": {
-        "primary": "anthropic/claude-sonnet-4-6"
+        "primary": "anthropic/claude-opus-4-6"
       },
       "contextTokens": 30000,
       "compaction": {
         "mode": "default"
       },
+      "thinkingDefault": "low",
       "workspace": "/root/storytelling-agent/workspace",
       "timeoutSeconds": 300,
       "heartbeat": {
@@ -52,7 +53,7 @@
     "telegram": {
       "enabled": true,
       "dmPolicy": "allowlist",
-      "botToken": "8525586294:AAG1BwXIHtCDgup99FyAC8DjxDejboJcJf8",
+      "botToken": "REDACTED",
       "groupPolicy": "allowlist",
       "dms": {
         "custom-1": {}
@@ -61,7 +62,8 @@
     }
   },
   "gateway": {
-    "mode": "local",
+    "mode": "remote",
+    "bind": "lan",
     "auth": {
       "mode": "token",
       "token": "602a014f3d1c5c310c453ce01955109b5084a7c0a6c7b102"

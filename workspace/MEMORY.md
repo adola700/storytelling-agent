@@ -2,17 +2,25 @@
 
 ## Active Story
 - **Status**: Active
-- **Title**: The Backward Hand
-- **Episode Count**: 1
+- **Episode Count**: 3
+- **Title**: The Waterline
+- **Genre**: Noir detective / climate catastrophe / temporal mystery
+- **Setting**: Flooded London, ~6 months post-flood. 1940s noir aesthetic. Big Ben frozen at 3:47.
 
 ## Character Roster
-- **Heinrich Vogt** — Solitary watchmaker, 60s, gray-templed, obsessively precise. Widower (wife's lavender still haunts the workshop). Carries guilt over a specific tragic moment 3 years ago (October 14th). Deeply isolated; craft is his only anchor.
+- **DI Vera Blackwood** — Hardened detective, refused to evacuate. Bloomsbury townhouse, 3rd floor. Boat: "The Consequence." Dies in week 3 every loop. Future-Vera's notebook says kill Catherine to break loop. Touched the carved initials in the crypt — may have destabilized the loop.
+- **Catherine Morse** — Trapped in 6-month time loop, retains memory across 17 resets. Appears as on evacuation day (dry, unchanged). Desperately trying to save Vera. Exhausted by repetition.
 
 ## Episode Log
-- **Episode 1 — "The Backward Hand":** Heinrich performs his evening ritual in his oil-lamp workshop during October rain. Discovers a clock he doesn't remember making — its hands move counterclockwise, defying all mechanical law. Dismantles it; finds an incomprehensible mechanism. By nightfall he's holding it to his chest, thinking of the one moment he'd undo. Ends on the threshold of decision.
+- **Ep 1 — "The Waterline"**: Vera finds green bottle with impossible photo of Catherine drowning in Vera's office + note: "It already happened. —CM." Spots duplicate notebook in water.
+- **Ep 2 — "Seventeen"**: Catherine reveals 6-month time loop broken at 3:47. Shows photo of Vera dead in week 3. Hands over future-Vera's notebook saying Vera must kill Catherine to break the loop.
+- **Ep 3 — "The Crypt"**: Vera and Catherine descend to St. Paul's crypt. Vera finds her own initials carved in stone (oxidation dates to 1947). Central chamber: frozen moment (suspended water, newspaper from flood day, Catherine's scarf). Big Ben chimes at 3:47 daily. 17 tally marks. Vera discovers her own corpse from a previous loop. Catherine explains the paradox: killing her creates the cycle. Then — the frozen moment MOVES for the first time in 17 loops. A droplet falls. Something Vera did (touching the carved initials?) destabilized it.
 
 ## Open Threads
-- The mystery clock: unmarked pewter case, unreadable maker's stamp, impossible mechanism — Heinrich did not make it. Origin unknown.
-- The tragedy 3 years ago, October 14th: not yet named. A sealed letter in his drawer, never sent. A photograph kept face-down on the shelf.
-- Heinrich's temptation: rewind that specific moment. Consequences unknown but implied to be catastrophic (town begins to unravel).
-- The clock is warm to the touch — as if alive.
+- The frozen moment moved — what did Vera change? Hope or catastrophe?
+- The carved initials dated 1947 — temporal reach beyond the flood?
+- The paradox: killing Catherine creates the cycle that demands killing Catherine
+- Is there a third option beyond kill/don't kill?
+- Why is Catherine the loop's memory anchor?
+- The Stayers — echoes of previous iterations?
+- Vera's week-3 death — can this loop's deviation prevent it?
