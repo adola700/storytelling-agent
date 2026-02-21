@@ -7,8 +7,7 @@
     "load": {
       "extraDirs": [
         "/root/storytelling-agent/workspace/skills/director",
-        "/root/storytelling-agent/workspace/skills/actor",
-        "/root/storytelling-agent/workspace/skills/session-reset"
+        "/root/storytelling-agent/workspace/skills/actor"
       ]
     }
   },
@@ -53,7 +52,7 @@
     "telegram": {
       "enabled": true,
       "dmPolicy": "allowlist",
-      "botToken": "REDACTED",
+      "botToken": "8525586294:AAG1BwXIHtCDgup99FyAC8DjxDejboJcJf8",
       "groupPolicy": "allowlist",
       "dms": {
         "custom-1": {}

@@ -1,6 +1,6 @@
 import json, os, time, urllib.request, urllib.error
 
-def call_llm(system: str, user: str, model: str = "claude-haiku-4-5", max_tokens: int = 10024) -> str:
+def call_llm(system: str, user: str, model: str = "claude-sonnet-4-5", max_tokens: int = 10024) -> str:
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
         raise RuntimeError("ANTHROPIC_API_KEY is not set")

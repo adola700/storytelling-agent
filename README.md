@@ -11,10 +11,10 @@ User (Telegram)
 OpenClaw Gateway
   │
   ▼
-Narrator (main agent — OpenClaw session, gpt-5.2)
+Narrator (main agent — OpenClaw session, Claude Sonnet 4.6)
   │
-  │  1. Reads context files: MEMORY.md + USER.md + last-episode.md
-  │  2. Builds 3-section premise (Story Memory / Previous Episode / User Prompt)
+  │  1. Reads context files: MEMORY.md + USER.md
+  │  2. Builds 2-section premise (Story Memory / User Prompt)
   │  3. Writes premise to /tmp/oc-premise.txt
   │  4. Runs pipeline via bash ─────────────────────────────────────┐
   │                                                                  │
@@ -22,11 +22,11 @@ Narrator (main agent — OpenClaw session, gpt-5.2)
   │     ▼
   │   run_pipeline.py
   │     │
-  │     ├─ Stage 1: Director (direct OpenAI API call → gpt-5-mini)
+  │     ├─ Stage 1: Director (API call → Claude Sonnet 4.6)
   │     │    → Reads USER.md for preferences
   │     │    → Returns: scene type, cast, acting instructions, blueprint
   │     │
-  │     ├─ Stage 2: Actor × N (direct OpenAI API call → gpt-5-mini, once per cast member)
+  │     ├─ Stage 2: Actor × N (API call → Claude Sonnet 4.6, once per cast member)
   │     │    → Reads USER.md for preferences
   │     │    → Returns: inner voice, actions, dialogue per character
   │     │
@@ -34,8 +34,8 @@ Narrator (main agent — OpenClaw session, gpt-5.2)
   │
   │  5. Synthesizes pipeline output into literary prose
   │  6. Delivers episode to user
-  │  7. Saves episode to last-episode.md, updates MEMORY.md
-  │  8. Every 2 episodes → /restart (clears conversation context)
+  │  7. Updates MEMORY.md
+  │  8. Every 2 episodes → /compact (compresses conversation context)
   │
   ▼
 Narrated Episode → Telegram
@@ -45,11 +45,11 @@ Narrated Episode → Telegram
 
 | Agent | How it runs | Model | Role |
 |-------|-------------|-------|------|
-| **Narrator** | OpenClaw session (main agent) | gpt-5.2 via OpenClaw | Orchestrates the story, writes final prose, manages memory and context resets |
-| **Director** | Python function (`director.py`) called via `run_pipeline.py` | gpt-5-mini via OpenAI API | Plans scenes — cast, beats, emotional arc, hooks |
-| **Actor** | Python function (`actor.py`) called via `run_pipeline.py` | gpt-5-mini via OpenAI API | Performs in-character — inner voice, dialogue, actions |
+| **Narrator** | OpenClaw session (main agent) | Claude Sonnet 4.6 via OpenClaw | Orchestrates the story, writes final prose, manages memory and context compaction |
+| **Director** | Python function (`director.py`) called via `run_pipeline.py` | Claude Sonnet 4.6 via Anthropic API | Plans scenes — cast, beats, emotional arc, hooks |
+| **Actor** | Python function (`actor.py`) called via `run_pipeline.py` | Claude Sonnet 4.6 via Anthropic API | Performs in-character — inner voice, dialogue, actions |
 
-**Note:** Director and Actor are **not** OpenClaw sub-agents. They are direct OpenAI API calls (`helpers.call_llm()`) invoked from a Python pipeline script. The Narrator runs the pipeline via bash, reads the JSON output, and synthesizes it into final prose.
+**Note:** Director and Actor are **not** OpenClaw sub-agents. They are Anthropic API calls (`helpers.call_llm()`) invoked from a Python pipeline script. The Narrator runs the pipeline via bash, reads the JSON output, and synthesizes it into final prose.
 
 ### Persistent Files (survive restarts)
 
@@ -57,15 +57,14 @@ Narrated Episode → Telegram
 |------|---------|
 | `workspace/MEMORY.md` | Story state — episode count, character roster, plot threads, episode summaries (~5k token cap) |
 | `workspace/USER.md` | User preferences — tone, pacing, content boundaries (~1k token cap) |
-| `workspace/last-episode.md` | Full text of the most recent episode (overwritten each episode) |
 
 ### Context Reset Protocol
 
-The Narrator triggers `/restart` every 2 episodes to clear conversation context and save tokens:
+The Narrator sends `/compact` every 2 episodes to compress conversation context and save tokens:
 
-1. After each episode: save full text to `last-episode.md`, update `MEMORY.md`
-2. On episodes 2, 4, 6... → `/restart` clears the OpenClaw session
-3. On restart: Narrator reads `MEMORY.md` + `USER.md` + `last-episode.md` and continues seamlessly
+1. After each episode: update `MEMORY.md`
+2. On episodes 2, 4, 6... → `/compact` compresses the OpenClaw session context
+3. MEMORY.md is the single source of story continuity
 4. No conversation history is needed — all state lives in files
 
 ---
@@ -137,9 +136,6 @@ cat <<'EOF' > workspace/MEMORY.md
 (none yet)
 EOF
 
-# Reset last episode
-echo "(No episode yet)" > workspace/last-episode.md
-
 # Restart gateway
 openclaw gateway stop
 openclaw gateway start
@@ -157,7 +153,6 @@ storytelling-agent/
 │   ├── AGENTS.md                          # Safety rules, memory policies, context reset docs
 │   ├── MEMORY.md                          # Persistent story state (survives restarts)
 │   ├── USER.md                            # User preferences (read by all agents)
-│   ├── last-episode.md                    # Latest episode full text (survives restarts)
 │   └── skills/
 │       ├── director/
 │       │   ├── run_pipeline.py            # Pipeline entry point (bash → Director → Actor → JSON)
