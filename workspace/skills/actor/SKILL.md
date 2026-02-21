@@ -9,7 +9,7 @@ This skill documents the Actor stage of the storytelling pipeline.
 
 ## Invoking the Actor Stage
 
-The Actor stage runs automatically as Stage 2 inside `run-pipeline.js` — it always follows the Director stage.
+The Actor stage runs automatically as Stage 2 inside `run_pipeline.py` — it always follows the Director stage.
 
 You will see in the bash output:
 ```

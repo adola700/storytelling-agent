@@ -1,17 +1,6 @@
-# USER.md - About Your Human
+# User Context
 
-_Learn about the person you're helping. Update this as you go._
+This skill reads user preferences from the workspace-level `USER.md` at runtime.
+The Director and Actor Python scripts automatically load `../../USER.md` and inject it into their LLM prompts.
 
-- **Name:**
-- **What to call them:**
-- **Pronouns:** _(optional)_
-- **Timezone:**
-- **Notes:**
-
-## Context
-
-_(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)_
-
----
-
-The more you know, the better you can help. But remember — you're learning about a person, not building a dossier. Respect the difference.
+Do NOT duplicate user preferences here — update `workspace/USER.md` instead.

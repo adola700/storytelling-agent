@@ -1,21 +1,28 @@
 {
   "env": {
-    "OPENAI_API_KEY": "REDACTED"
+    "OPENAI_API_KEY": "REDACTED",
+    "ANTHROPIC_API_KEY": "REDACTED"
   },
   "skills": {
     "load": {
       "extraDirs": [
         "/root/storytelling-agent/workspace/skills/director",
-        "/root/storytelling-agent/workspace/skills/actor"
+        "/root/storytelling-agent/workspace/skills/actor",
+        "/root/storytelling-agent/workspace/skills/session-reset"
       ]
     }
   },
   "agents": {
     "defaults": {
       "model": {
-        "primary": "openai/gpt-5.1"
+        "primary": "anthropic/claude-sonnet-4-6"
+      },
+      "contextTokens": 30000,
+      "compaction": {
+        "mode": "default"
       },
       "workspace": "/root/storytelling-agent/workspace",
+      "timeoutSeconds": 300,
       "heartbeat": {
         "every": "0m"
       }
@@ -46,7 +53,7 @@
     "telegram": {
       "enabled": true,
       "dmPolicy": "allowlist",
-      "botToken": "8525586294:AAG1BwXIHtCDgup99FyAC8DjxDejboJcJf8",
+      "botToken": "REDACTED",
       "groupPolicy": "allowlist",
       "dms": {
         "custom-1": {}

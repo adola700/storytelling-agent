@@ -4,23 +4,24 @@
 
 Both the Director and Actor stages are invoked via a single bash command:
 
-### run-pipeline.js
-Runs Director (scene planning) then Actor (character performance) in sequence.
+### run_pipeline.py
+Runs Director (scene planning) then Actor (character performance, once per cast member) in sequence.
 
 **Bash command:**
 ```
-node /root/storytelling-agent/workspace/skills/director/run-pipeline.js \
-  /tmp/oc-premise.txt /tmp/oc-context.txt /tmp/oc-pipeline.json 2>&1
+python3 /root/storytelling-agent/workspace/skills/director/run_pipeline.py \
+  /tmp/oc-premise.txt /tmp/oc-pipeline.json 2>&1
 ```
 
-**Input files (write these first):**
+**Input file (write this first):**
 - `/tmp/oc-premise.txt` — the story prompt / current direction
-- `/tmp/oc-context.txt` — story history from MEMORY.md
 
 **Output file (read after bash completes):**
-- `/tmp/oc-pipeline.json` — JSON with: `character_name`, `scene_plan`, `acting_instructions`, `actor_performance`
+- `/tmp/oc-pipeline.json` — JSON with:
+  - `scene_plan` — full Director output
+  - `cast` — array of cast members, each with `character_name`, `acting_instructions`, `actor_performance`
 
-**Debug output** (visible in bash tool result): `[Director]` and `[Actor]` log lines confirming both LLM calls fired.
+**Debug output** (visible in bash tool result): `[Director]` and `[Actor]` log lines confirming all LLM calls fired.
 
 ## File Tools (Memory Management)
 
@@ -38,7 +39,7 @@ Edit existing files. Primary use: updating specific sections of `MEMORY.md`.
 See `SOUL.md` for the full orchestration protocol. In brief:
 1. `read` MEMORY.md → understand story state
 2. `write` `/tmp/oc-premise.txt` and `/tmp/oc-context.txt`
-3. `bash` `run-pipeline.js` → Director + Actor stages (both LLM calls in one script)
+3. `bash` `run_pipeline.py` → Director + Actor stages (one LLM call per cast member)
 4. `read` `/tmp/oc-pipeline.json` → get scene_plan + actor_performance
 5. **Write the episode yourself** — synthesize Director's blueprint + Actor's performance into literary prose
 6. `write` / `edit` MEMORY.md → save state
